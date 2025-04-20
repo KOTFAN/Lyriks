@@ -1,9 +1,18 @@
 import { Error, Loader, SongCard } from '../components';
 import { genres } from './../assets/constants';
 
+import { useGetTopChartsQuery } from '../redux/services/YoutubeMusic';
+
 const Discover = () => {
+   const { data, isFetching, error } = useGetTopChartsQuery();
 
    const ganreTitle = genres[0].title
+   console.log(data)
+
+   if (isFetching) return <Loader title='Loading Best Ever Songs...' />
+
+   if (error) return <Error />
+
 
    return (
       <div className='flex flex-col'>
@@ -18,10 +27,10 @@ const Discover = () => {
 
          </div>
          <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-            {[10, 9, 8, 7, 6, 5, 4, 3, 2, 1].map((song, i) => (
+            {data?.result?.map((song, i) => (
                <SongCard
-                  key={song.key}
-                  song={song}
+                  key={song.videoId}
+                  song={song.title}
                   i={i}
                />
             ))}
