@@ -12,7 +12,6 @@ const Discover = () => {
    const { data, isFetching, error } = useGetTopChartsQuery();
 
    const ganreTitle = genres[0].title
-   console.log(data)
 
    if (isFetching) return <Loader title='Loading Best Ever Songs...' />
 

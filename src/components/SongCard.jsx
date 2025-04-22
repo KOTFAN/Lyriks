@@ -1,17 +1,22 @@
 import { Link } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
 
 import PlayPause from './PlayPause';
+import { playPause, setActiveSong } from '../redux/features/playerSlice';
 
 const SongCard = ({ song, i, isPlaying, activeSong, data }) => {
 
+   const dispatch = useDispatch()
+
 
    const handlePauseClick = () => {
+      dispatch(playPause(false))
 
    }
 
    const handlePlayClick = () => {
-
+      dispatch(setActiveSong({ song, data, i }));
+      dispatch(playPause(true))
    }
 
    return (
@@ -23,7 +28,7 @@ const SongCard = ({ song, i, isPlaying, activeSong, data }) => {
                   handlePause={handlePauseClick}
                   handlePlay={handlePlayClick}
                   isPlaying={isPlaying}
-                  activeSong={isPlaying}
+                  activeSong={activeSong}
                />
             </div>
             <img className='w-full h-full object-cover ' src={song?.thumbnail} alt="song_img" />
