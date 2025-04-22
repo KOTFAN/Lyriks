@@ -15,8 +15,6 @@ const playerSlice = createSlice({
    reducers: {
       setActiveSong: (state, action) => {
 
-         console.log('STATE is', state)
-         console.log('action is', action)
 
          state.activeSong = action.payload.song;
 
@@ -55,7 +53,7 @@ const playerSlice = createSlice({
       },
 
       playPause: (state, action) => {
-         console.log()
+
          state.isPlaying = action.payload;
       },
 
