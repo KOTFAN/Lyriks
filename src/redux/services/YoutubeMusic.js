@@ -12,10 +12,19 @@ export const youtubeMusicAPI = createApi({
       }
    }),
    endpoints: (builder) => ({
-      getTopCharts: builder.query({ query: () => '/search?q=OkeanElzy&type=artist' })
+      getTopCharts: builder.query({ query: () => '/search?q=schmalgauzen&type=artist' }),
+      getSongDetails: builder.query({
+         query: ({ songid }) => {
+
+            return `/music/lyrics/plain?id=${songid}`
+
+         }
+
+      })
    }),
 });
 
 export const {
    useGetTopChartsQuery,
+   useGetSongDetailsQuery
 } = youtubeMusicAPI
