@@ -1,9 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 
+
 import { Error, Loader, SongCard } from '../components';
 import { genres } from './../assets/constants';
 
 import { useGetTopChartsQuery } from '../redux/services/YoutubeMusic';
+
 
 const Discover = () => {
    const dispatch = useDispatch();
@@ -11,7 +13,7 @@ const Discover = () => {
 
    const { data, isFetching, error } = useGetTopChartsQuery();
 
-   const ganreTitle = genres[0].title
+   // const ganreTitle = genres[0].title
 
    if (isFetching) return <Loader title='Loading Best Ever Songs...' />
 
