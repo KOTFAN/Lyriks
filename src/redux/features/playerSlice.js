@@ -16,6 +16,8 @@ const playerSlice = createSlice({
       setActiveSong: (state, action) => {
 
 
+
+
          state.activeSong = action.payload.song;
 
          if (action.payload?.data?.result) {
@@ -24,7 +26,7 @@ const playerSlice = createSlice({
             state.currentSongs = action.payload.data.result;
          }
 
-         console.log(action.payload.i)
+         // console.log(action.payload.i)
 
          state.currentIndex = action.payload.i;
          state.isActive = true;
@@ -53,6 +55,7 @@ const playerSlice = createSlice({
       },
 
       playPause: (state, action) => {
+         // console.log('set')
 
          state.isPlaying = action.payload;
       },

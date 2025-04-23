@@ -14,10 +14,29 @@ import 'swiper/css/free-mode'
 import { TopCharts } from "../pages";
 
 
-const TopChartCard = ({ song, i }) => {
+const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handlePlayClick }) => {
    return (
       <div className="w-full flex flex-row items-center hover:bg-[#4c426e] py-2 p-4 rounded-lg cursor-pointer mb-2">
-         {song.title}
+
+
+         <h3 className="font-bold text-base text-white mr-3">{i + 1}</h3>
+         <div className="flex-1 flex flex-row justify-between items-center">
+            <img className="w-20 h-20 rounded-lg " src={song?.thumbnail} alt="musicImg" />
+            <div className="flex-1 flex flex-col justify-center mx-3">
+               <Link to={`/songs/${song.videoId}`} >
+                  <p className="text-xl font-bold text-white">{song.title} </p>
+               </Link>
+               <Link to={`/artists/${song.author}`} >
+                  <p className="text-sm font-bold text-gray-300">{song.author} </p>
+               </Link>
+            </div>
+         </div>
+         <PlayPause
+            isPlaying={isPlaying}
+            activeSong={activeSong}
+            song={song}
+            handlePause={handlePauseClick}
+            handlePlay={handlePlayClick} />
 
       </div>
    )
@@ -32,13 +51,13 @@ const TopPlay = () => {
    const divRef = useRef(null)
 
    useEffect(() => {
-      divRef.current.scrollIntoView({ behavior: 'smooth' }, [])
-   })
+      divRef.current?.scrollIntoView({ behavior: 'smooth' });
+   }, []);
 
 
 
    const topSongs = data?.result?.slice(0, 5);
-   console.log(data, topSongs)
+   // console.log(data, topSongs)
 
    const handlePauseClick = () => {
       dispatch(playPause(false))
@@ -46,10 +65,13 @@ const TopPlay = () => {
    }
 
 
-   const handlePlayClick = () => {
+   const handlePlayClick = (song, i) => {
+      console.log("🟢 PLAY clicked", song, i);
       dispatch(setActiveSong({ song, data, i }));
-      dispatch(playPause(true))
+      dispatch(playPause(true));
+
    }
+
 
    return (
       //here top chart is just first 5 from search, but in future i will made another api request
@@ -62,8 +84,17 @@ const TopPlay = () => {
                </Link>
             </div>
             <div className="mt-5 flex flex-col gap-1">
+
                {data && topSongs.map((song, i) =>
-                  (<TopChartCard song={song} i={i} key={song.videoId} />))}
+               (<TopChartCard
+                  song={song}
+                  i={i}
+                  key={song.videoId}
+                  isPlaying={isPlaying}
+                  activeSong={activeSong}
+                  handlePauseClick={handlePauseClick}
+                  handlePlayClick={() => handlePlayClick(song, i)}
+               />))}
             </div>
          </div>
 
@@ -80,10 +111,6 @@ const TopPlay = () => {
                {data && topSongs.map((song, i) => (<SwiperSlide key={song?.videoId} style={{ 'width': '25%', 'height': 'auto' }} className="shadow-lg rounded-full animate-slideright ">
                   <Link to={`/artists/${song?.author}`}>
                      <img src={song?.thumbnail} alt="Image" className="rounded-full w-full object-cover" />
-
-                     {/* {song?.author} */}
-
-
                   </Link>
                </SwiperSlide>)
 

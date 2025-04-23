@@ -1,7 +1,7 @@
 import { FaPauseCircle, FaPlayCircle } from 'react-icons/fa'
 
 const PlayPause = ({ song, handlePause, handlePlay, isPlaying, activeSong }) => {
-   // console.log(activeSong)
+   // console.log(handlePause, handlePlay)
    return (isPlaying && activeSong?.title === song.title ?
       (<FaPauseCircle
          size={35}
